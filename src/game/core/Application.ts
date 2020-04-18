@@ -1,12 +1,20 @@
 /**
  * External dependencies.
  */
-import * as PIXI from 'pixi.js';
+import { Application as GameApplication } from 'pixi.js';
+
+/**
+ * Internal dependencies.
+ */
+import GraphicContainerManager from '@/game/managers/GraphicContainerManager';
+import EntityManager from '@/game/managers/EntityManager';
 
 class Application {
     protected static instance: Application | null;
 
-    protected app: PIXI.Application | null = null;
+    protected app: GameApplication | null = null;
+    protected graphicContainerManager: GraphicContainerManager | null = null;
+    protected entityManager: EntityManager | null = null;
 
     private constructor() {}
 
@@ -15,11 +23,13 @@ class Application {
             return this;
         }
 
-        this.app = new PIXI.Application({
+        this.app = new GameApplication({
             width,
             height,
             backgroundColor,
         });
+        this.graphicContainerManager = new GraphicContainerManager(this.app);
+        this.entityManager = new EntityManager();
 
         element.appendChild(this.app.view);
 
@@ -42,8 +52,16 @@ class Application {
         return !!this.app;
     }
 
-    getApp(): PIXI.Application {
+    getApp(): GameApplication {
         return this.app!;
+    }
+
+    getGraphicManager(): GraphicContainerManager {
+        return this.graphicContainerManager!;
+    }
+
+    getEntityManager(): EntityManager {
+        return this.entityManager!;
     }
 
     static getInstance() {
