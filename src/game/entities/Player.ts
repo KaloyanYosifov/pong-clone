@@ -8,12 +8,19 @@ import Victor from 'victor';
  */
 import Entity from '@/game/entities/Entity';
 import Rectangle from '@/game/graphics/Rectangle';
+import Application from '@/game/core/Application';
 
 class Player extends Entity {
     rectangle: Rectangle;
 
     constructor() {
-        super(new Victor(0, 0), new Victor(128, 64));
+        const size = new Victor(256, 32);
+        const position = new Victor(
+            (Application.getInstance().getWidth() / 2) - (size.x / 2),
+            Application.getInstance().getHeight() - (size.y + (size.y / 2)),
+        );
+
+        super(position, size);
 
         this.rectangle = new Rectangle(this.position, this.size);
     }

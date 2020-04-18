@@ -24,6 +24,7 @@ module.exports = {
         '@typescript-eslint/no-empty-function': 'off',
         'no-case-declarations': 'off',
         'no-void': 'off',
+        'no-new': 'off',
         'no-useless-constructor': 'off',
         'no-trailing-spaces': ['error', {
             skipBlankLines: true,

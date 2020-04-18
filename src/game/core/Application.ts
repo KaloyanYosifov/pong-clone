@@ -16,7 +16,9 @@ class Application {
     protected graphicContainerManager: GraphicContainerManager | null = null;
     protected entityManager: EntityManager | null = null;
 
-    private constructor() {}
+    private constructor() {
+        this.tick = this.tick.bind(this);
+    }
 
     init(element: HTMLElement, width: number, height: number, backgroundColor = 0xffffff) {
         if (this.app) {
@@ -36,11 +38,28 @@ class Application {
         return this;
     }
 
+    start() {
+        if (!this.app) {
+            return;
+        }
+
+        this.app.ticker.add(this.tick);
+    }
+
+    stop() {
+        if (!this.app) {
+            return;
+        }
+
+        this.app.ticker.remove(this.tick);
+    }
+
     destroy() {
         if (!this.app) {
             return this;
         }
 
+        this.stop();
         this.app.destroy(true);
 
         this.app = null;
@@ -62,6 +81,18 @@ class Application {
 
     getEntityManager(): EntityManager {
         return this.entityManager!;
+    }
+
+    getWidth() {
+        return this.getApp().view.width;
+    }
+
+    getHeight() {
+        return this.getApp().view.height;
+    }
+
+    protected tick() {
+        this.entityManager && this.entityManager.update();
     }
 
     static getInstance() {
