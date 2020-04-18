@@ -2,17 +2,17 @@
  * External dependencies.
  */
 import Victor from 'victor';
-import keyboardJS from 'keyboardjs';
+import { Graphics } from 'pixi.js';
 
 /**
  * Internal dependencies.
  */
 import Entity from '@/game/entities/Entity';
-import Rectangle from '@/game/graphics/Rectangle';
 import Application from '@/game/core/Application';
+import { KeyboardKeys } from '@/game/utils/KeyboardKeys';
 
 class Player extends Entity {
-    rectangle: Rectangle;
+    protected speed: number;
 
     constructor() {
         const size = new Victor(256, 32);
@@ -23,47 +23,62 @@ class Player extends Entity {
 
         super(position, size);
 
-        this.rectangle = new Rectangle(this.position.clone(), this.size.clone());
+        this.speed = 10;
+        const graphics = new Graphics();
+
+        graphics.beginFill(0xff0000);
+        graphics.drawRect(0, 0, this.size.x, this.size.y);
+        graphics.endFill();
+
+        this.getContainer().addChild(graphics);
 
         this.moveLeft = this.moveLeft.bind(this);
         this.moveUp = this.moveUp.bind(this);
         this.moveRight = this.moveRight.bind(this);
         this.moveDown = this.moveDown.bind(this);
-
-        keyboardJS.bind('left', this.moveLeft);
-        keyboardJS.bind('right', this.moveRight);
-        keyboardJS.bind('up', this.moveUp);
-        keyboardJS.bind('down', this.moveDown);
     }
 
     update() {
-        this.rectangle.update();
+        let x = this.position.x;
+        let y = this.position.y;
+
+        if (Application.getInstance().getKeyboardManager().isKeyPressed(KeyboardKeys.ARROW_UP)) {
+            y -= this.speed;
+        }
+
+        if (Application.getInstance().getKeyboardManager().isKeyPressed(KeyboardKeys.ARROW_DOWN)) {
+            y += this.speed;
+        }
+
+        if (Application.getInstance().getKeyboardManager().isKeyPressed(KeyboardKeys.ARROW_LEFT)) {
+            x -= this.speed;
+        }
+
+        if (Application.getInstance().getKeyboardManager().isKeyPressed(KeyboardKeys.ARROW_RIGHT)) {
+            x += this.speed;
+        }
+
+        this.setPosition(new Victor(x, y));
     }
 
     destroy() {
         super.destroy();
-
-        this.rectangle.destroy();
     }
 
     protected moveLeft() {
         this.setX(this.position.x - 10);
-        this.rectangle.setPosition(this.position);
     }
 
     protected moveUp() {
         this.setY(this.position.y - 10);
-        this.rectangle.setPosition(this.position);
     }
 
     protected moveRight() {
         this.setX(this.position.x + 10);
-        this.rectangle.setPosition(this.position);
     }
 
     protected moveDown() {
         this.setY(this.position.y + 10);
-        this.rectangle.setPosition(this.position);
     }
 }
 

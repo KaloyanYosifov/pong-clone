@@ -20,6 +20,10 @@ class GraphicContainerManager {
 
     destroy() {
         for (const graphic of this.graphics) {
+            graphic.destroy({
+                children: true,
+            });
+
             this.app.stage.removeChild(graphic);
         }
 

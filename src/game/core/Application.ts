@@ -6,15 +6,17 @@ import { Application as GameApplication } from 'pixi.js';
 /**
  * Internal dependencies.
  */
-import GraphicContainerManager from '@/game/managers/GraphicContainerManager';
 import EntityManager from '@/game/managers/EntityManager';
+import KeyboardManager from '@/game/managers/KeyboardManager';
+import GraphicContainerManager from '@/game/managers/GraphicContainerManager';
 
 class Application {
     protected static instance: Application | null;
 
     protected app: GameApplication | null = null;
-    protected graphicContainerManager: GraphicContainerManager | null = null;
     protected entityManager: EntityManager | null = null;
+    protected keyboardManager: KeyboardManager | null = null;
+    protected graphicContainerManager: GraphicContainerManager | null = null;
 
     private constructor() {
         this.tick = this.tick.bind(this);
@@ -30,8 +32,9 @@ class Application {
             height,
             backgroundColor,
         });
-        this.graphicContainerManager = new GraphicContainerManager(this.app);
         this.entityManager = new EntityManager();
+        this.keyboardManager = new KeyboardManager();
+        this.graphicContainerManager = new GraphicContainerManager(this.app);
 
         element.appendChild(this.app.view);
 
@@ -59,6 +62,10 @@ class Application {
             return this;
         }
 
+        this.entityManager && this.entityManager.destroy();
+        this.keyboardManager && this.keyboardManager.destroy();
+        this.graphicContainerManager && this.graphicContainerManager.destroy();
+
         this.stop();
         this.app.destroy(true);
 
@@ -81,6 +88,10 @@ class Application {
 
     getEntityManager(): EntityManager {
         return this.entityManager!;
+    }
+
+    getKeyboardManager(): KeyboardManager {
+        return this.keyboardManager!;
     }
 
     getWidth() {

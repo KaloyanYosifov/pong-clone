@@ -24,9 +24,7 @@ export default class Game extends Vue {
 
         this.engine.init(this.gameContainer);
 
-        setTimeout(() => {
-            this.engine.start();
-        }, 3000);
+        this.engine.start();
     }
 }
 </script>
