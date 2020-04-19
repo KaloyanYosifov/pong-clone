@@ -58,6 +58,12 @@ class Player extends Entity {
             x += this.speed;
         }
 
+        if (x !== this.position.x || y !== this.position.y) {
+            this.moving = true;
+        } else {
+            this.moving = false;
+        }
+
         this.setPosition(new Victor(x, y));
     }
 

@@ -10,6 +10,7 @@ import Victor from 'victor';
 import Application from '@/game/core/Application';
 
 abstract class Entity {
+    protected moving = false;
     protected container: Container | null = null;
 
     protected constructor(
@@ -98,6 +99,10 @@ abstract class Entity {
 
     getHeight() {
         return this.size.y;
+    }
+
+    isMoving() {
+        return this.moving;
     }
 
     protected getContainer() {

@@ -6,6 +6,10 @@ import Entity from '@/game/entities/Entity';
 class EntityManager {
     protected entities: Entity[] = [];
 
+    all() {
+        return this.entities;
+    }
+
     addEntity(entity: Entity) {
         this.entities.push(entity);
     }
