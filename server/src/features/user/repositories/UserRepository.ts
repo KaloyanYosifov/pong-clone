@@ -1,4 +1,9 @@
 /**
+ * External dependencies.
+ */
+import { v4 as uuid } from 'uuid';
+
+/**
  * Internal dependencies.
  */
 import { db } from '@/db';
@@ -28,7 +33,7 @@ export class UserRepository {
     }
 
     create(input: CreateUserInput) {
-        return tap<User>(new User({ id: '123123', ...input }), () => {
+        return tap<User>(new User({ id: uuid(), ...input }), () => {
             db.get(User.getTableName())
                 .push(input)
                 .write();
