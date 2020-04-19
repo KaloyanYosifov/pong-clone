@@ -8,6 +8,7 @@ import Victor from 'victor';
  * Internal dependencies.
  */
 import Application from '@/game/core/Application';
+import { EntityTypes } from '@/game/types/EntityTypes';
 
 abstract class Entity {
     protected moving = false;
@@ -27,6 +28,8 @@ abstract class Entity {
     }
 
     abstract update(): void;
+
+    abstract getEntityType(): EntityTypes;
 
     destroy() {
         Application.getInstance().getGraphicManager().removeContainer(this.container!);
@@ -103,6 +106,22 @@ abstract class Entity {
 
     isMoving() {
         return this.moving;
+    }
+
+    intersects(entity: Entity) {
+        if (
+            entity.getPosition().y + entity.getSize().y > this.position.y &&
+            entity.getPosition().y < this.position.y + this.size.y
+        ) {
+            if (
+                entity.getPosition().x < this.position.x + this.size.x &&
+                entity.getPosition().x + entity.getSize().x > this.position.x
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected getContainer() {

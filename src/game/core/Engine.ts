@@ -4,6 +4,7 @@
 import Application from '@/game/core/Application';
 import Player from '@/game/entities/Player';
 import Ball from '@/game/entities/Ball';
+import Enemy from '@/game/entities/Enemy';
 
 class Engine {
     protected width = 800;
@@ -31,6 +32,7 @@ class Engine {
     protected initEntities() {
         new Ball();
         new Player();
+        new Enemy();
     }
 }
 
