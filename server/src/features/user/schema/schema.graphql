@@ -14,11 +14,17 @@ input CreateUserInput {
     password: String!
 }
 
+input LoginUserInput {
+    name: String!
+    password: String!
+}
+
 type Query {
     me: User
     users: [User]!
 }
 
 type Mutation {
-    signup(input: CreateUserInput): UserWithToken!
+    login(input: LoginUserInput!): UserWithToken
+    signup(input: CreateUserInput!): UserWithToken!
 }

@@ -10,7 +10,7 @@ import { webtoken } from '@/webtoken';
 import { tap } from '@/db/utils/helpers';
 import { User, UserModel } from '@/features/user/models/User';
 
-export interface CreateUserInput {
+export interface UserInput {
     name: string;
     password: string;
 }
@@ -40,7 +40,15 @@ export class UserRepository {
         return data ? new User(data) : null;
     }
 
-    create(input: CreateUserInput) {
+    find(input: UserInput) {
+        const data = db.get(User.getTableName())
+            .find(input)
+            .value();
+
+        return data ? new User(data) : null;
+    }
+
+    create(input: UserInput) {
         const id = uuid();
         const token = webtoken.sign({ id });
         const combinedInput = { id, token, ...input };

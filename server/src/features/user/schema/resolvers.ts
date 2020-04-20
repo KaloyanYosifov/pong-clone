@@ -6,7 +6,7 @@ import { IResolvers } from 'graphql-tools';
 /**
  * Internal dependencies.
  */
-import { CreateUserInput } from '@/features/user/repositories/UserRepository';
+import { UserInput } from '@/features/user/repositories/UserRepository';
 import { Context } from '@/server';
 import { authenticated } from '@/utils/middlewares';
 
@@ -21,7 +21,10 @@ const resolvers: IResolvers = {
     },
 
     Mutation: {
-        signup(_, { input }: { input: CreateUserInput }, { userRepository }: Context) {
+        login(_, { input }: { input: UserInput }, { userRepository }: Context) {
+            return userRepository.find(input)?.getAttributes();
+        },
+        signup(_, { input }: { input: UserInput }, { userRepository }: Context) {
             return userRepository.create(input).getAttributes();
         },
     },
