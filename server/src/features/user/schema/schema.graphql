@@ -1,7 +1,12 @@
 type User {
     id: ID!
     name: String!
-    password: String!
+}
+
+type UserWithToken {
+    id: ID!
+    name: String!
+    token: String!
 }
 
 input CreateUserInput {
@@ -14,5 +19,5 @@ type Query {
 }
 
 type Mutation {
-    signup(input: CreateUserInput): User!
+    signup(input: CreateUserInput): UserWithToken!
 }

@@ -7,8 +7,9 @@ import { v4 as uuid } from 'uuid';
  * Internal dependencies.
  */
 import { db } from '@/db';
-import { User, UserModel } from '@/features/user/models/User';
+import { webtoken } from '@/webtoken';
 import { tap } from '@/db/utils/helpers';
+import { User, UserModel } from '@/features/user/models/User';
 
 export interface CreateUserInput {
     name: string;
@@ -33,9 +34,13 @@ export class UserRepository {
     }
 
     create(input: CreateUserInput) {
-        return tap<User>(new User({ id: uuid(), ...input }), () => {
+        const id = uuid();
+        const token = webtoken.sign({ id });
+        const combinedInput = { id, token, ...input };
+
+        return tap<User>(new User(combinedInput), (user) => {
             db.get(User.getTableName())
-                .push(input)
+                .push(user.getAttributes())
                 .write();
         });
     }

@@ -1,7 +1,8 @@
 export interface UserModel {
     id: string | number;
-    name?: string;
+    name: string;
     password: string;
+    token?: string;
 }
 
 export class User {
