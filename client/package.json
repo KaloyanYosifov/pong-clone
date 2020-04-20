@@ -8,14 +8,22 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
     "core-js": "^3.6.4",
+    "graphql": "14.5.8",
+    "graphql-tag": "^2.10.3",
     "node-sass": "^4.13.1",
     "pixi.js": "^5.2.1",
     "sass-loader": "^8.0.2",
     "victor": "^1.1.0",
     "vue": "^2.6.11",
+    "vue-apollo": "^3.0.3",
     "vue-class-component": "^7.2.3",
-    "vue-property-decorator": "^8.4.1"
+    "vue-property-decorator": "^8.4.1",
+    "vue-router": "^3.1.6"
   },
   "devDependencies": {
     "@types/pixi.js": "^5.0.0",

@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <Game />
+        <router-view></router-view>
     </div>
 </template>
 
@@ -13,7 +13,7 @@ import { Component, Vue } from 'vue-property-decorator';
 /**
  * Internal dependencies.
  */
-import Game from '@/components/game/Game.vue';
+import Game from '@/features/game/pages/game/Game.vue';
 
 @Component({
     components: {

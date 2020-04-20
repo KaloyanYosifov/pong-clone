@@ -30,5 +30,5 @@ export default class Game extends Vue {
 </script>
 
 <style lang="scss" scoped>
-    @import './styles';
+    @import 'styles';
 </style>
