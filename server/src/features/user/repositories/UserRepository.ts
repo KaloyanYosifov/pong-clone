@@ -2,7 +2,6 @@
  * External dependencies.
  */
 import { v4 as uuid } from 'uuid';
-
 /**
  * Internal dependencies.
  */
@@ -31,6 +30,14 @@ export class UserRepository {
                     password: data.password,
                 });
             });
+    }
+
+    findById(id: string | number): User | null {
+        const data = db.get(User.getTableName())
+            .find({ id })
+            .value();
+
+        return data ? new User(data) : null;
     }
 
     create(input: CreateUserInput) {

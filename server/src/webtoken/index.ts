@@ -9,9 +9,13 @@ const privateKeyData = fs.readFileSync(path.resolve(__dirname, '..', '..', 'webt
 
 const webtoken = {
     sign(data: any) {
-        return jwt.sign(data, privateKeyData, { algorithm: 'RS256' });
+        return jwt.sign(data, privateKeyData);
     },
-    verify(token: string) {
+    verify(token: string | null) {
+        if (!token) {
+            return null;
+        }
+
         return jwt.verify(token, privateKeyData);
     },
 };

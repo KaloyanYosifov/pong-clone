@@ -1,18 +1,27 @@
 /**
+ * External dependencies.
+ */
+import { IResolvers } from 'graphql-tools';
+
+/**
  * Internal dependencies.
  */
 import { CreateUserInput } from '@/features/user/repositories/UserRepository';
 import { Context } from '@/server';
+import { authenticated } from '@/utils/middlewares';
 
-const resolvers = {
+const resolvers: IResolvers = {
     Query: {
-        users(_: any, __: any, { userRepository }: Context) {
+        me: authenticated((_, __, { user }) => {
+            return user!.getAttributes();
+        }),
+        users(_, __, { userRepository }: Context) {
             return userRepository.all().map(user => user.getAttributes());
         },
     },
 
     Mutation: {
-        signup(_: any, { input }: { input: CreateUserInput }, { userRepository }: Context) {
+        signup(_, { input }: { input: CreateUserInput }, { userRepository }: Context) {
             return userRepository.create(input).getAttributes();
         },
     },
