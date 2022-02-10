@@ -15,7 +15,7 @@
     "core-js": "^3.6.4",
     "graphql": "14.5.8",
     "graphql-tag": "^2.10.3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "pixi.js": "^5.2.1",
     "sass-loader": "^8.0.2",
     "victor": "^1.1.0",
